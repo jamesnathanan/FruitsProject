@@ -52,22 +52,37 @@ const banana = new Fruit({
   review: "Weird texture",
 });
 
-Fruit.insertMany([kiwi, orange, banana], function (err) {
+// Fruit.insertMany([kiwi, orange, banana], function (err) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Successfully save fruits to fruitsDB");
+//   }
+// });
+
+Fruit.find(function (err, fruits) {
   if (err) {
     console.log(err);
   } else {
-    console.log("Successfully save fruits to fruitsDB");
+    setTimeout(function () {
+      mongoose.connection.close();
+    }, 100);
+
+    fruits.forEach((fruit) => {
+      console.log(fruit.name);
+    });
+    // console.log(fruits);
   }
 });
 
-const findDocuments = function (db, callback) {
-  // Get the documents collection
-  const collection = db.collection("fruits");
-  // Find some documents
-  collection.find({}).toArray(function (err, fruits) {
-    assert.equal(err, null);
-    console.log("Found the following records");
-    console.log(fruits);
-    callback(fruits);
-  });
-};
+// const findDocuments = function (db, callback) {
+//   // Get the documents collection
+//   const collection = db.collection("fruits");
+//   // Find some documents
+//   collection.find({}).toArray(function (err, fruits) {
+//     assert.equal(err, null);
+//     console.log("Found the following records");
+//     console.log(fruits);
+//     callback(fruits);
+//   });
+// };
